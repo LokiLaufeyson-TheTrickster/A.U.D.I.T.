@@ -56,10 +56,10 @@ export default function SettingsLayer({ onClose }: Props) {
       background: 'rgba(0,0,0,0.9)', backdropFilter: 'blur(20px)',
       display: 'flex', alignItems: 'center', justifyContent: 'center'
     }}>
-      <div className="glass-panel" style={{ width: '500px', padding: '40px' }}>
-        <h2 style={{ fontSize: '12px', letterSpacing: '4px', color: 'var(--gray-500)', marginBottom: '30px' }}>SYSTEM CONFIGURATION</h2>
+      <div className="glass-panel" style={{ width: '90%', maxWidth: '500px', padding: '30px', maxHeight: '90vh', overflowY: 'auto' }}>
+        <h2 style={{ fontSize: '10px', letterSpacing: '4px', color: 'var(--gray-500)', marginBottom: '20px' }}>SYSTEM CONFIGURATION</h2>
         
-        <div style={{ marginBottom: '24px' }}>
+        <div style={{ marginBottom: '20px' }}>
           <label style={{ fontSize: '10px', color: 'var(--gray-400)', display: 'block', marginBottom: '8px' }}>OPENROUTER API KEY</label>
           <input 
             type="password"
@@ -72,22 +72,21 @@ export default function SettingsLayer({ onClose }: Props) {
           />
         </div>
 
-        <div style={{ marginBottom: '30px' }}>
+        <div style={{ marginBottom: '25px' }}>
           <label style={{ fontSize: '10px', color: 'var(--gray-400)', display: 'block', marginBottom: '8px' }}>MODEL PRIORITY QUEUE (Comma-separated)</label>
-          <input 
-            type="text"
+          <textarea 
             value={modelPriority}
             onChange={(e) => setModelPriority(e.target.value)}
             placeholder="e.g. google/gemini-2.0-flash-001, openrouter/auto"
             style={{
               width: '100%', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--gray-700)',
               padding: '12px', color: 'var(--cyan)', borderRadius: '4px', fontSize: '11px',
-              fontFamily: 'var(--font-mono)'
+              fontFamily: 'var(--font-mono)', minHeight: '80px', resize: 'vertical'
             }}
           />
         </div>
 
-        <div style={{ display: 'flex', gap: '15px' }}>
+        <div style={{ display: 'flex', gap: '15px', flexDirection: window.innerWidth < 480 ? 'column' : 'row' }}>
           <button 
             onClick={testConnection}
             style={{

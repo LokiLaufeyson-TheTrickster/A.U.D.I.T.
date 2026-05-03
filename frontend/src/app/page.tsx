@@ -15,6 +15,11 @@ export default function MultiverseDashboard() {
   const [simResults, setSimResults] = useState<any>(null);
   const [amplifierText, setAmplifierText] = useState('');
 
+  const cleanJsonResponse = (content: string) => {
+    // Remove markdown code blocks if present
+    return content.replace(/```json/g, '').replace(/```/g, '').trim();
+  };
+
   const handleAnalyze = async (text: string) => {
     setDecision(text);
     setIsAnalyzing(true);
@@ -43,7 +48,8 @@ export default function MultiverseDashboard() {
       
       const result = await response.json();
       if (result.status === 'success') {
-        const parsed = JSON.parse(result.content);
+        const cleaned = cleanJsonResponse(result.content);
+        const parsed = JSON.parse(cleaned);
         setSimResults(parsed);
         setRegretScore(parsed.regret_score);
         setAmplifierText(`TRAJECTORY LOCK ENGAGED. 5-YEAR REGRET: ${(parsed.regret_score * 100).toFixed(1)}%`);
@@ -71,7 +77,7 @@ export default function MultiverseDashboard() {
           A.U.D.I.T. <span style={{ color: 'var(--crimson)', fontSize: '12px' }}>v2.0</span>
         </div>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <div style={{ fontSize: '10px', color: 'var(--gray-500)', letterSpacing: '2px' }}>
+          <div className="header-codename" style={{ fontSize: '10px', color: 'var(--gray-500)', letterSpacing: '2px' }}>
             CODENAME: CHRONOS_FORK
           </div>
           <button 
@@ -89,7 +95,7 @@ export default function MultiverseDashboard() {
 
       <main style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         {/* Left: Regret Gauge */}
-        <div style={{ width: '120px', padding: '40px 20px', borderRight: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="gauge-container" style={{ width: '120px', padding: '40px 20px', borderRight: '1px solid rgba(255,255,255,0.05)' }}>
           <RegretGauge value={regretScore} />
         </div>
 
@@ -101,7 +107,7 @@ export default function MultiverseDashboard() {
           />
           
           {/* Decision Input Overlay */}
-          <div style={{ 
+          <div className="decision-input-overlay" style={{ 
             position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)',
             width: '80%', maxWidth: '800px', zIndex: 10
           }}>

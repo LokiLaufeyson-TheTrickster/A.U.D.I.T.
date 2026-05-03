@@ -59,7 +59,7 @@ export default function ForkView({ results, isAnalyzing }: Props) {
   }
 
   return (
-    <div style={{ height: '100%', display: 'flex' }}>
+    <div className="fork-container" style={{ height: '100%', display: 'flex' }}>
       {/* The Stoic */}
       <div style={{ 
         flex: 1, padding: '40px', borderRight: '1px solid rgba(255,255,255,0.05)',

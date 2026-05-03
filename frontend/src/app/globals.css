@@ -102,3 +102,44 @@ html, body {
 .glow-text {
   text-shadow: 0 0 10px currentColor;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-container {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  main {
+    flex-direction: column !important;
+    overflow-y: visible !important;
+  }
+
+  .gauge-container {
+    width: 100% !important;
+    height: 150px !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 20px !important;
+  }
+
+  .fork-container {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+
+  .decision-input-overlay {
+    position: fixed !important;
+    bottom: 20px !important;
+    width: 95% !important;
+  }
+
+  header {
+    padding: 15px 20px !important;
+  }
+
+  .header-codename {
+    display: none;
+  }
+}

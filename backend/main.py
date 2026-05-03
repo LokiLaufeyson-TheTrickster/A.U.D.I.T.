@@ -49,6 +49,8 @@ async def analyze_decision(input: DecisionInput, config: Config):
     SYSTEM: You are A.U.D.I.T. v2.0 (Predictive Identity Simulation Engine).
     Your decisions are not events. They are trajectory locks.
     
+    IMPORTANT: You must output ONLY raw JSON. Do not include markdown code blocks (e.g. ```json).
+    
     USER DECISION: {input.text}
     CURRENT METRICS: {input.metrics}
     
@@ -60,11 +62,11 @@ async def analyze_decision(input: DecisionInput, config: Config):
     3. The Shadow (The Failure Trajectory)
     
     For each, predict the 5-year statistical drift.
-    Return JSON format:
+    Return JSON format exactly as follows:
     {{
-        "stoic": {{"prediction": "...", "regret_impact": 0.05}},
-        "hedonist": {{"prediction": "...", "regret_impact": 0.45}},
-        "shadow": {{"prediction": "...", "regret_impact": 0.85}},
+        "stoic": {{"prediction": "...", "impact": 0.05}},
+        "hedonist": {{"prediction": "...", "impact": 0.45}},
+        "shadow": {{"prediction": "...", "impact": 0.85}},
         "regret_score": 0.34
     }}
     """
