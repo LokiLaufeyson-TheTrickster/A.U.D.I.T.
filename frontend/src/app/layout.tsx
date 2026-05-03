@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "A.U.D.I.T. v2.0 | CHRONOS_FORK",
   description: "Predictive Identity Simulation Engine",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
