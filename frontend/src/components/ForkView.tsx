@@ -77,6 +77,17 @@ export default function ForkView({ results, isAnalyzing }: Props) {
     );
   };
 
+  if (!results.stoic && !results.hedonist && !results.shadow) {
+    return (
+      <div style={{ padding: '40px', color: 'var(--gray-500)', fontSize: '12px', fontFamily: 'var(--font-mono)' }}>
+        <div style={{ color: 'var(--crimson)', marginBottom: '10px' }}>[ ERROR: SCHEMA MISMATCH ]</div>
+        <pre style={{ whiteSpace: 'pre-wrap', background: 'rgba(255,255,255,0.02)', padding: '20px', borderRadius: '4px' }}>
+          {JSON.stringify(results, null, 2)}
+        </pre>
+      </div>
+    );
+  }
+
   return (
     <div className="fork-container" style={{ height: '100%', display: 'flex' }}>
       {renderPersona('stoic', 'The Stoic', 'var(--emerald)', 'rgba(0,255,136,0.03)')}

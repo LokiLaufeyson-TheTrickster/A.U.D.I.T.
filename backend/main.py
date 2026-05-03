@@ -70,27 +70,33 @@ async def analyze_decision(input: DecisionInput, config: Config):
             "snapshot_1y": "Discipline is now a character trait, not a chore.",
             "snapshot_5y": "Unrecognizable resilience compared to peers.",
             "snapshot_10y": "Biological age significantly lower than chronological age.",
-            "impact_narrative": "You become a fortress of discipline.",
+            "impact_narrative": "You become a fortress of discipline, impervious to the minor impulses that derail others.",
             "regret_impact": 0.05
         }},
         "hedonist": {{
-            "snapshot_1m": "...", "snapshot_1y": "...", "snapshot_5y": "...", "snapshot_10y": "...",
-            "impact_narrative": "...",
+            "snapshot_1m": "Temporary satisfaction followed by a slight dip in morning energy.",
+            "snapshot_1y": "Consistency has eroded; you find excuses for comfort twice a week.",
+            "snapshot_5y": "Metabolic health begins to slide; sleep quality is chronically compromised.",
+            "snapshot_10y": "You look and feel significantly older than your potential.",
+            "impact_narrative": "A life defined by the pursuit of comfort, leading to a body and mind that are soft and easily fatigued.",
             "regret_impact": 0.45
         }},
         "shadow": {{
-            "snapshot_1m": "...", "snapshot_1y": "...", "snapshot_5y": "...", "snapshot_10y": "...",
-            "impact_narrative": "...",
+            "snapshot_1m": "The first domino falls; discipline is replaced by a cycle of 'starting tomorrow'.",
+            "snapshot_1y": "Health markers are in decline; cooking is a rare event, and energy is non-existent.",
+            "snapshot_5y": "Chronic health issues emerge; you have lost control over your baseline habits.",
+            "snapshot_10y": "Full trajectory collapse; the version of you that could have been is now an impossible dream.",
+            "impact_narrative": "A tragic collapse of potential where your body has become a prison of your own making.",
             "regret_impact": 0.95
         }},
         "regret_score": 0.34
     }}
     """
     
-    messages = [{"role": "user", "content": prompt}]
-    result = client.chat_completion(messages)
-    
-    return result
+    print(f"--- SIMULATING TRAJECTORY FOR: {input.text} ---")
+    response = await client.get_completion(prompt, config.model_priority)
+    print(f"--- RAW LLM OUTPUT ---\n{response}\n--- END OUTPUT ---")
+    return {"status": "success", "content": response}
 
 @app.post("/log-outcome")
 async def log_outcome(data: dict = Body(...)):
