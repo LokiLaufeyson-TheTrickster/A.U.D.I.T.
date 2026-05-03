@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+ENV/
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+backend/faiss_index/
+frontend/.next/
+frontend/node_modules/
