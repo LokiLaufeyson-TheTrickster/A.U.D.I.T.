@@ -3,22 +3,22 @@
 
 > "Your decisions are not events. They are trajectory locks."
 
-A.U.D.I.T. is a predictive identity simulation engine that anchors Large Language Model (LLM) projections in grounded behavioral data. By combining FAISS-based behavioral clustering with natural language persona forking, the system models the long-term statistical drift of a user's life.
+A.U.D.I.T. is a predictive identity simulation engine that anchors Large Language Model (LLM) projections in grounded behavioral data. It transforms "what if" into "most likely" by modeling the long-term statistical drift of a user's life.
 
 ## 🚀 Core Philosophy
-Your life is a sequence of trajectory locks. Every minor decision (skipping a workout, delaying a task, choosing rest over effort) is not an isolated event—it is a weight applied to a specific future persona. A.U.D.I.T. exposes the compounding debt of these decisions.
+Your life is a sequence of trajectory locks. Every minor decision is a weight applied to a specific future persona. A.U.D.I.T. exposes the compounding debt of these decisions.
 
 ## 🛠 Features
-- **OpenRouter Signal Layer**: High-availability AI engine with multi-model fallback (Gemini 2.0 Flash, Claude 3, GPT-4o).
-- **Behavioral Vector Engine (FAISS)**: Uses historical behavioral logs to ground simulations in reality.
-- **Persona Forking Engine**: Dynamic weighting of personas (The Stoic, The Hedonist, The Shadow) based on real metrics.
+- **OpenRouter Signal Layer**: High-availability AI engine with **user-defined model priority** (allowing for cost optimization and use of free models).
+- **Behavioral Vector Engine (FAISS)**: Grounds simulations in reality using B.A.S.E logs or **A.U.D.I.T. native logs**.
+- **Persona Forking Engine**: Dynamic weighting of personas (The Stoic, The Hedonist, The Shadow, etc.) based on real metrics.
 - **The Simulation Loop**: Runs 5-year simulations (1,825 steps) to predict statistical drift.
 - **Regret Engine ($R_g$)**: Computes a mathematical value for trajectory debt.
-- **Multiverse Dashboard**: A premium, glassmorphism-based UI for real-time decision analysis.
+- **Multiverse Dashboard**: A premium UI for real-time decision analysis and trajectory comparison.
 
 ## 🏗 Architecture
-- **Frontend**: Next.js 15, Dexie.js v2, Vanilla CSS.
-- **Backend**: FastAPI, FAISS, Sentence-Transformers.
+- **Frontend**: Next.js 15 (Optimized for Vercel deployment), Dexie.js v2, Vanilla CSS.
+- **Backend**: FastAPI (Runs **locally** on device for privacy and FAISS efficiency).
 - **AI Engine**: OpenRouter API.
 
 ## 🛠 Setup
@@ -36,7 +36,7 @@ Your life is a sequence of trajectory locks. Every minor decision (skipping a wo
    cd A.U.D.I.T.
    ```
 
-2. **Setup Backend**:
+2. **Setup Local Backend**:
    ```bash
    cd backend
    pip install -r requirements.txt
@@ -52,7 +52,7 @@ Your life is a sequence of trajectory locks. Every minor decision (skipping a wo
 
 4. **Configuration**:
    - Access the dashboard at `http://localhost:3000`.
-   - Click **SETTINGS** to input your OpenRouter API Key.
+   - Click **SETTINGS** to input your OpenRouter API Key and custom model priority list.
    - Run a connection test to ensure the Signal Layer is active.
 
 ---

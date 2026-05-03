@@ -21,6 +21,11 @@ export default function MultiverseDashboard() {
     
     try {
       const config = await db.configs.get('openrouter_key');
+      const priorityConfig = await db.configs.get('model_priority');
+      const model_priority = priorityConfig?.value 
+        ? priorityConfig.value.split(',').map((m: string) => m.trim())
+        : ["google/gemini-2.0-flash-001", "anthropic/claude-3-haiku", "openai/gpt-4o-mini"];
+
       const response = await fetch('http://localhost:8000/analyze-decision', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -31,7 +36,7 @@ export default function MultiverseDashboard() {
           },
           config: {
             openrouter_key: config?.value || '',
-            model_priority: ["google/gemini-2.0-flash-001", "anthropic/claude-3-haiku", "openai/gpt-4o-mini"]
+            model_priority: model_priority
           }
         })
       });

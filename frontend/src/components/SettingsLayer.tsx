@@ -9,6 +9,7 @@ interface Props {
 
 export default function SettingsLayer({ onClose }: Props) {
   const [apiKey, setApiKey] = useState('');
+  const [modelPriority, setModelPriority] = useState('');
   const [latency, setLatency] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'testing' | 'success' | 'failed'>('idle');
 
@@ -16,10 +17,15 @@ export default function SettingsLayer({ onClose }: Props) {
     db.configs.get('openrouter_key').then(config => {
       if (config) setApiKey(config.value);
     });
+    db.configs.get('model_priority').then(config => {
+      if (config) setModelPriority(config.value);
+      else setModelPriority("google/gemini-2.0-flash-001, anthropic/claude-3-haiku, openai/gpt-4o-mini");
+    });
   }, []);
 
   const handleSave = async () => {
     await db.configs.put({ key: 'openrouter_key', value: apiKey });
+    await db.configs.put({ key: 'model_priority', value: modelPriority });
     alert('Configuration Locked.');
   };
 
@@ -67,12 +73,18 @@ export default function SettingsLayer({ onClose }: Props) {
         </div>
 
         <div style={{ marginBottom: '30px' }}>
-          <label style={{ fontSize: '10px', color: 'var(--gray-400)', display: 'block', marginBottom: '8px' }}>MODEL PRIORITY QUEUE</label>
-          <div style={{ fontSize: '11px', color: 'var(--cyan)', fontFamily: 'var(--font-mono)' }}>
-            1. google/gemini-2.0-flash-001 (DEFAULT)<br/>
-            2. anthropic/claude-3-haiku<br/>
-            3. openai/gpt-4o-mini
-          </div>
+          <label style={{ fontSize: '10px', color: 'var(--gray-400)', display: 'block', marginBottom: '8px' }}>MODEL PRIORITY QUEUE (Comma-separated)</label>
+          <input 
+            type="text"
+            value={modelPriority}
+            onChange={(e) => setModelPriority(e.target.value)}
+            placeholder="e.g. google/gemini-2.0-flash-001, openrouter/auto"
+            style={{
+              width: '100%', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--gray-700)',
+              padding: '12px', color: 'var(--cyan)', borderRadius: '4px', fontSize: '11px',
+              fontFamily: 'var(--font-mono)'
+            }}
+          />
         </div>
 
         <div style={{ display: 'flex', gap: '15px' }}>

@@ -76,6 +76,22 @@ export default function ForkView({ results, isAnalyzing }: Props) {
         </div>
       </div>
 
+      {/* The Hedonist */}
+      <div style={{ 
+        flex: 1, padding: '40px', borderRight: '1px solid rgba(255,255,255,0.05)',
+        background: 'linear-gradient(to bottom, rgba(255,170,0,0.02), transparent)'
+      }}>
+        <div style={{ fontSize: '9px', letterSpacing: '2px', color: 'var(--amber)', marginBottom: '10px' }}>PERSONA: THE HEDONIST</div>
+        <h2 style={{ fontSize: '24px', fontWeight: 300, marginBottom: '20px' }}>Impulse Path</h2>
+        <p style={{ color: 'var(--gray-300)', lineHeight: 1.6, fontSize: '14px' }}>
+          {results.hedonist.prediction}
+        </p>
+        <div style={{ marginTop: '30px', padding: '15px', border: '1px solid var(--amber)', borderRadius: '4px' }}>
+          <div style={{ fontSize: '10px', color: 'var(--amber)' }}>5-YEAR REGRET IMPACT</div>
+          <div style={{ fontSize: '20px', fontWeight: 900 }}>+{(results.hedonist.impact * 100).toFixed(1)}%</div>
+        </div>
+      </div>
+
       {/* The Shadow */}
       <div style={{ 
         flex: 1, padding: '40px',
