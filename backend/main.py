@@ -66,32 +66,26 @@ async def analyze_decision(input: DecisionInput, config: Config):
     Return JSON format exactly as follows:
     {{
         "stoic": {{
-            "snapshots": {{
-                "1m": "...",
-                "1y": "...",
-                "5y": "...",
-                "10y": "..."
-            }},
+            "snapshot_1m": "...",
+            "snapshot_1y": "...",
+            "snapshot_5y": "...",
+            "snapshot_10y": "...",
             "impact_narrative": "One paragraph describing the visceral reality of this life.",
             "regret_impact": 0.05
         }},
         "hedonist": {{
-            "snapshots": {{
-                "1m": "...",
-                "1y": "...",
-                "5y": "...",
-                "10y": "..."
-            }},
+            "snapshot_1m": "...",
+            "snapshot_1y": "...",
+            "snapshot_5y": "...",
+            "snapshot_10y": "...",
             "impact_narrative": "...",
             "regret_impact": 0.45
         }},
         "shadow": {{
-            "snapshots": {{
-                "1m": "...",
-                "1y": "...",
-                "5y": "...",
-                "10y": "..."
-            }},
+            "snapshot_1m": "...",
+            "snapshot_1y": "...",
+            "snapshot_5y": "...",
+            "snapshot_10y": "...",
             "impact_narrative": "...",
             "regret_impact": 0.95
         }},

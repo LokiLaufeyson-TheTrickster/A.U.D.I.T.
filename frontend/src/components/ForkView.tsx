@@ -53,7 +53,7 @@ export default function ForkView({ results, isAnalyzing }: Props) {
                 {time.toUpperCase()}
               </div>
               <div style={{ fontSize: '11px', color: 'var(--gray-300)', lineHeight: 1.4 }}>
-                {data.snapshots?.[time] || 'Simulation data missing.'}
+                {data[`snapshot_${time}`] || data.snapshots?.[time] || 'Simulation data missing.'}
               </div>
             </div>
           ))}
