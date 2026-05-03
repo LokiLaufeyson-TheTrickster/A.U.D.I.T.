@@ -53,7 +53,7 @@ export default function ForkView({ results, isAnalyzing }: Props) {
                 {time.toUpperCase()}
               </div>
               <div style={{ fontSize: '11px', color: 'var(--gray-300)', lineHeight: 1.4 }}>
-                {data[`snapshot_${time}`] || data.snapshots?.[time] || 'Simulation data missing.'}
+                {data[`snapshot_${time}`] || data.snapshots?.[time] || data[time] || 'Simulation data missing.'}
               </div>
             </div>
           ))}
@@ -62,7 +62,7 @@ export default function ForkView({ results, isAnalyzing }: Props) {
         {/* Narrative Paragraph */}
         <div className="glass-panel" style={{ padding: '20px', borderLeft: `2px solid ${color}` }}>
           <p style={{ color: 'var(--white)', lineHeight: 1.6, fontSize: '14px', fontStyle: 'italic' }}>
-            &quot;{data.impact_narrative}&quot;
+            &quot;{data.impact_narrative || data.prediction || data.narrative || 'Impact narrative missing.'}&quot;
           </p>
         </div>
 
