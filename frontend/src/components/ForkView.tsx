@@ -34,6 +34,18 @@ export default function ForkView({ results, isAnalyzing }: Props) {
     const data = results[key];
     if (!data) return null;
 
+    // If data is just a string (common for low-tier models), use it as the narrative
+    const isString = typeof data === 'string';
+    const narrative = isString ? data : (data.impact_narrative || data.prediction || data.narrative || 'Impact narrative missing.');
+    
+    // For snapshots, if data is a string, we have no snapshots
+    const getSnapshot = (time: string) => {
+      if (isString) return 'Simulation data missing (Persona returned as text).';
+      return data[`snapshot_${time}`] || data.snapshots?.[time] || data[time] || 'Simulation data missing.';
+    };
+
+    const impactValue = isString ? 0 : (data.regret_impact || data.impact || 0);
+
     return (
       <div style={{ 
         flex: 1, padding: '30px', borderRight: key !== 'shadow' ? '1px solid rgba(255,255,255,0.05)' : 'none',
@@ -53,7 +65,7 @@ export default function ForkView({ results, isAnalyzing }: Props) {
                 {time.toUpperCase()}
               </div>
               <div style={{ fontSize: '11px', color: 'var(--gray-300)', lineHeight: 1.4 }}>
-                {data[`snapshot_${time}`] || data.snapshots?.[time] || data[time] || 'Simulation data missing.'}
+                {getSnapshot(time)}
               </div>
             </div>
           ))}
@@ -62,7 +74,7 @@ export default function ForkView({ results, isAnalyzing }: Props) {
         {/* Narrative Paragraph */}
         <div className="glass-panel" style={{ padding: '20px', borderLeft: `2px solid ${color}` }}>
           <p style={{ color: 'var(--white)', lineHeight: 1.6, fontSize: '14px', fontStyle: 'italic' }}>
-            &quot;{data.impact_narrative || data.prediction || data.narrative || 'Impact narrative missing.'}&quot;
+            &quot;{narrative}&quot;
           </p>
         </div>
 
@@ -70,29 +82,28 @@ export default function ForkView({ results, isAnalyzing }: Props) {
         <div style={{ marginTop: '30px', padding: '15px', border: `1px solid ${color}44`, borderRadius: '4px' }}>
           <div style={{ fontSize: '10px', color: color, letterSpacing: '1px' }}>10-YEAR TRAJECTORY SHIFT</div>
           <div style={{ fontSize: '24px', fontWeight: 900, color: 'var(--white)' }}>
-            +{( (data.regret_impact || 0) * 100).toFixed(0)}%
+            +{(impactValue * 100).toFixed(0)}%
           </div>
         </div>
       </div>
     );
   };
 
-  if (!results.stoic && !results.hedonist && !results.shadow) {
-    return (
-      <div style={{ padding: '40px', color: 'var(--gray-500)', fontSize: '12px', fontFamily: 'var(--font-mono)' }}>
-        <div style={{ color: 'var(--crimson)', marginBottom: '10px' }}>[ ERROR: SCHEMA MISMATCH ]</div>
-        <pre style={{ whiteSpace: 'pre-wrap', background: 'rgba(255,255,255,0.02)', padding: '20px', borderRadius: '4px' }}>
-          {JSON.stringify(results, null, 2)}
-        </pre>
-      </div>
-    );
-  }
+  const isMismatch = !results.stoic && !results.hedonist && !results.shadow;
 
   return (
-    <div className="fork-container" style={{ height: '100%', display: 'flex' }}>
-      {renderPersona('stoic', 'The Stoic', 'var(--emerald)', 'rgba(0,255,136,0.03)')}
-      {renderPersona('hedonist', 'The Hedonist', 'var(--amber)', 'rgba(255,170,0,0.03)')}
-      {renderPersona('shadow', 'The Shadow', 'var(--crimson)', 'rgba(255,31,68,0.03)')}
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div className="fork-container" style={{ flex: 1, display: 'flex' }}>
+        {renderPersona('stoic', 'The Stoic', 'var(--emerald)', 'rgba(0,255,136,0.03)')}
+        {renderPersona('hedonist', 'The Hedonist', 'var(--amber)', 'rgba(255,170,0,0.03)')}
+        {renderPersona('shadow', 'The Shadow', 'var(--crimson)', 'rgba(255,31,68,0.03)')}
+      </div>
+      
+      {isMismatch && (
+        <div style={{ padding: '20px', background: 'rgba(255,31,68,0.05)', color: 'var(--crimson)', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>
+          [ DEBUG: RAW TRACE ] {JSON.stringify(results).substring(0, 500)}...
+        </div>
+      )}
     </div>
   );
 }
